@@ -29,8 +29,14 @@ def pull_arm(true_values, action, rng):
     reward = true_values[action] + noise
     return reward
 
-# Step 3 - sample_average_update (not yet solved)
-# TODO: implement
+# Step 3 - sample_average_update
+def sample_average_update(q_values, action_counts, action, reward):
+    # TODO: Update an action-value estimate incrementally from one new reward...
+    q_values = q_values.copy()
+    action_counts = action_counts.copy()
+    action_counts[action] += 1
+    q_values[action] += (1 / action_counts[action]) * (reward - q_values[action])
+    return q_values, action_counts
 
 # Step 4 - epsilon_greedy_action (not yet solved)
 # TODO: implement
