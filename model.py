@@ -38,8 +38,15 @@ def sample_average_update(q_values, action_counts, action, reward):
     q_values[action] += (1 / action_counts[action]) * (reward - q_values[action])
     return q_values, action_counts
 
-# Step 4 - epsilon_greedy_action (not yet solved)
-# TODO: implement
+# Step 4 - epsilon_greedy_action
+def epsilon_greedy_action(q_values, epsilon, rng):
+    # TODO: Choose an action epsilon-greedily from the current value estimates.
+    k = len(q_values)
+
+    if rng.random() < epsilon:
+        return int(rng.integers(0, k))
+
+    return int(np.argmax(q_values))
 
 # Step 5 - run_bandit_episode (not yet solved)
 # TODO: implement
