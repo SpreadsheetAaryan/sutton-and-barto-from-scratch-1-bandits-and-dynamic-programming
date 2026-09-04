@@ -78,8 +78,30 @@ def run_bandit_episode(true_values, n_steps, epsilon, rng):
 
     return rewards, actions
 
-# Step 6 - track_rewards_and_optimal_actions (not yet solved)
-# TODO: implement
+# Step 6 - track_rewards_and_optimal_actions
+def track_rewards_and_optimal_actions(true_values, n_steps, epsilon, rng):
+    """Run one episode tracking rewards and optimal-arm choices.
+
+    Args:
+        true_values (np.ndarray): Shape (k,) true mean reward of each arm.
+        n_steps (int): Number of pulls in the episode.
+        epsilon (float): Exploration probability for epsilon-greedy.
+        rng (np.random.Generator): Seeded random generator.
+
+    Returns:
+        tuple: (rewards, optimal_flags) each shape (n_steps,).
+            optimal_flags entries are 0.0 or 1.0 floats.
+    """
+    # TODO: return per-step rewards and 0/1 optimal-arm flags
+    rewards, actions = run_bandit_episode(true_values, n_steps, epsilon, rng)
+    optimal_action = int(np.argmax(true_values))
+    optimal_flags = np.zeros(n_steps, dtype=float)
+
+    for i in range(len(actions)):
+        if actions[i] == optimal_action:
+            optimal_flags[i] = 1.0
+    
+    return rewards.astype(float), optimal_flags
 
 # Step 7 - average_bandit_curves (not yet solved)
 # TODO: implement
