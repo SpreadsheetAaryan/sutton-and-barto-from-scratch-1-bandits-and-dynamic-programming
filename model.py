@@ -48,8 +48,35 @@ def epsilon_greedy_action(q_values, epsilon, rng):
 
     return int(np.argmax(q_values))
 
-# Step 5 - run_bandit_episode (not yet solved)
-# TODO: implement
+# Step 5 - run_bandit_episode
+def run_bandit_episode(true_values, n_steps, epsilon, rng):
+    """Run one bandit episode with epsilon-greedy selection and sample-average updates.
+
+    Args:
+        true_values (np.ndarray): Shape (k,) true mean reward of each arm.
+        n_steps (int): Number of pulls in the episode.
+        epsilon (float): Exploration probability for epsilon-greedy.
+        rng (np.random.Generator): Seeded random generator.
+
+    Returns:
+        tuple: (rewards, actions) with shapes (n_steps,) and (n_steps,) of ints.
+    """
+    # TODO: Run one episode and return the rewards and actions sequences
+    k = len(true_values)
+    q_values = np.zeros(k)
+    action_counts = np.zeros(k, dtype=int)
+
+    rewards = np.zeros(n_steps)
+    actions = np.zeros(n_steps, dtype=int)
+
+    for t in range(n_steps):
+        action = epsilon_greedy_action(q_values, epsilon, rng)
+        reward = pull_arm(true_values, action, rng)
+        q_values, action_counts = sample_average_update(q_values, action_counts, action, reward)
+        rewards[t] = reward
+        actions[t] = action
+
+    return rewards, actions
 
 # Step 6 - track_rewards_and_optimal_actions (not yet solved)
 # TODO: implement
