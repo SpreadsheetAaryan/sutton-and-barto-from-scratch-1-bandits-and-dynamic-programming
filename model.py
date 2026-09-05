@@ -170,8 +170,21 @@ def ucb_action_select(q_values, action_counts, timestep, c):
     ucb_scores = q_values + c * np.sqrt(np.log(timestep) / action_counts)
     return np.argmax(ucb_scores)
 
-# Step 12 - gradient_bandit_update (not yet solved)
-# TODO: implement
+# Step 12 - gradient_bandit_update
+def gradient_bandit_update(preferences, action, reward, average_reward, alpha):
+    # TODO: Update softmax action preferences with one gradient-bandit step.
+    def softmax(x):
+        exp_x = np.exp(x)
+        return exp_x / exp_x.sum()
+
+    probs = softmax(preferences)
+    preferences[action] += alpha * (reward - average_reward) * (1 - probs[action])
+    for i in range(len(preferences)):
+        if i == action:
+            continue
+        preferences[i] -= alpha * (reward - average_reward) * probs[i]
+    
+    return preferences
 
 # Step 13 - bandit_parameter_study (not yet solved)
 # TODO: implement
