@@ -167,6 +167,10 @@ def ucb_action_select(q_values, action_counts, timestep, c):
         int: Index of the selected action.
     """
     # TODO: Choose action by UCB scores balancing value vs visit counts
+    unvisited = np.where(action_counts == 0)[0]
+
+    if len(unvisited) > 0:
+        return int(unvisited[0])
     ucb_scores = q_values + c * np.sqrt(np.log(timestep) / action_counts)
     return np.argmax(ucb_scores)
 
